@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: nest-ideas
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      # Persiste o arquivo SQLite diretamente na raiz do projeto
+      - ./db.sqlite:/usr/src/app/db.sqlite
+    environment:
+      DATABASE_TYPE: sqlite
+      DATABASE_NAME: db.sqlite
+      DB_SYNC: 'true'
+      LOGGING: 'false'
+      JWT_SECRET: 'troque_para_um_segredo_real'
+    command: >
+      sh -c "npm run start:prod"
